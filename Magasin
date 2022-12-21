@@ -1,0 +1,101 @@
+//Storage room build with electrical cabinet and rounded wall.
+
+south=1120+940;
+southwall=south-400;
+east=1220+1040;
+eastwall=east-300;
+tall=1200+960;
+vent=50;
+margin=1;
+
+difference(){
+union(){
+outset();
+flooring();
+baseline();
+standers();
+drywalls();
+door();
+shell();
+}
+roomforbox();
+}
+box();
+
+module box(){
+    difference(){
+    color("green")translate ([eastwall/2-southwall/8, southwall-100+20, tall*0.7+10+30])cube([500,160,700],center=true);
+      color("white")translate ([eastwall/2-southwall/8, southwall-100+30, tall*0.7+10+30])cube([490,150,690],center=true);   
+    }
+}
+module roomforbox(){
+    color("red")translate ([eastwall/2-southwall/8, southwall, tall*0.7+10+30])cube([500,499,700],center=true);
+}
+module shell(){
+    color("beige")translate ([eastwall/2-southwall/4, southwall, tall/2+10+30])cube([eastwall-southwall/2-50-50,12,tall-50-20-20],center=true);
+  for (l=[3:6:90]){
+color("beige")translate([eastwall-50-southwall/2, southwall/2-50, tall/2+10+30])rotate([0,0,l])translate([southwall/2+50, 0,0])cube([12,100,tall-50-20-20],center=true);
+}  
+}
+
+module drywalls(){
+    color("beige")translate ([eastwall/2, vent+50+10, tall/2+10+30])cube([eastwall-50-50,12,tall-50-20-20],center=true);
+    color("beige")translate ([vent+50+10, southwall/2, tall/2+10+30])cube([12,southwall-50-50,tall-50-20-20],center=true);
+    color("beige")translate ([eastwall/2-southwall/4, southwall-50-10, tall/2+10+30])cube([eastwall-southwall/2-50-50,12,tall-50-20-20],center=true);
+    for (l=[3:6:90]){
+color("beige")translate([eastwall-50-southwall/2, southwall/2-50, tall/2+10+30])rotate([0,0,l])translate([southwall/2, 0,0])cube([12,100,tall-50-20-20],center=true);
+}
+}
+module door(){
+   for (i=[0:160:600]){
+    color("silver")translate ([eastwall-10, vent+150+i, tall/2+10+30])cube([20,150,tall-50-20-20],center=true); 
+}
+}
+module standers(){
+    for (i=[0:600:eastwall]){
+    color("yellow")translate ([eastwall-i-50, vent, 20+50])cube([50,50,tall-50-20],center=false);
+
+}
+color("yellow")translate ([vent, vent+35, 20+50])cube([50,50,tall-50-20],center=false);
+color("yellow")translate ([vent, vent+35, 20+50])cube([50,50,tall-50-20],center=false);
+ for (k=[0:600:eastwall/2]){
+    color("yellow")translate ([eastwall-southwall/2-k-50, southwall-50, 20+50])cube([50,50,tall-50-20],center=false);
+
+}
+for (j=[0:600:southwall]){
+color("yellow")translate ([vent, southwall-j-50, 20+50])cube([50,50,tall-50-20],center=false);
+}
+for (l=[0:15:90]){
+color("yellow")translate([eastwall-50-southwall/2, southwall/2-50, 20+50])rotate([0,0,l])translate([southwall/2, 0,0])cube([50,50,tall-50-20],center=false);
+}
+}
+module baseline(){
+    color("yellow")translate ([vent, vent+50, 20+50/2])cube([50,southwall-vent-50,50],center=false);
+    color("yellow")translate ([eastwall-50, vent+50, 20+50/2])cube([50,southwall/2-vent-50,50],center=false);
+    color("yellow")translate ([vent, vent, 20+50/2])cube([eastwall-vent,50,50],center=false);
+    color("yellow")translate ([vent, southwall-50, 20+50/2])cube([eastwall-southwall/2-vent,50,50],center=false);
+    for (l=[0:15:90]){
+color("yellow")translate([eastwall-50-southwall/2, southwall/2-50, 20+50])rotate([0,0,l])translate([southwall/2+25, 0,0])cube([50,250,50],center=true);
+}
+   }
+module flooring();{intersection(){
+    color("brown")for (i=[-2000:300:3000]){
+    translate ([vent, vent+i, 20/2])rotate([0,0,30])cube([3000,50,20],center=false);
+}
+outline();
+}
+}
+module outline(){
+    union(){
+    translate([eastwall/2,southwall/4,tall/2])cube([eastwall,southwall/2,tall],center=true);
+        translate([eastwall/2-southwall/4,3*southwall/4,tall/2])cube([eastwall-southwall/2,southwall/2,tall],center=true);
+        translate([eastwall-southwall/2,southwall/2,tall/2])cylinder(tall,southwall/2,southwall/2,center=true);
+        }
+}
+module outset(){
+   color("grey") difference(){
+translate([south/2-200/2-margin,east/2-200/2-margin,tall/2-10-margin])cube([south+200,east+200,tall+20],center=true);    
+translate([south/2,east/2,tall/2])cube([south,east,tall],center=true);    
+}
+}
+//beneath floorboards comes plastic sheet. behind the standers and attached to them is membrane.
