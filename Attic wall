@@ -1,0 +1,49 @@
+//Attic wall with door plan
+
+//Measurements  / \            |
+//            /  |  \          | 
+//          /         \        |
+//         |     *_2315_       |
+//    1429 |           |1426   |2535   
+//         |  _4761_   |       |
+
+//Input parameters
+southlow=1429;
+northlow=1426;
+northsouth=4761;
+heigth=2535;
+centernorth=2315;
+doorwidth=1200;
+doorheigth=1900;
+doornorth=400;
+woodthick=50;
+woodbroad=100;
+
+translate([0,woodbroad,0])rotate([90,0,0])linear_extrude(2)blueprint();
+framework();
+
+module blueprint(){
+    color("blue")polygon([[-doorwidth-doornorth,0],[-northsouth+centernorth,0],[-northsouth+centernorth,southlow],[0,heigth],[centernorth,northlow],[centernorth,0],[-doorwidth/2+doornorth,0],[-doorwidth/2+doornorth,doorheigth],[doorwidth/2+doornorth,doorheigth],[doorwidth/2+doornorth,0]]);
+}
+module framework(){
+    color("yellow"){
+        //dooropening:
+    translate([-doorwidth/2+doornorth-woodthick/2,0,doorheigth/2+woodthick/2])cube([woodthick,woodbroad,doorheigth-woodthick],center=true);
+    translate([doorwidth/2+doornorth+woodthick/2,0,doorheigth/2+woodthick/2])cube([woodthick,woodbroad,doorheigth-woodthick],center=true);
+        translate([doornorth,0,doorheigth+woodthick/2])cube([doorwidth+2*woodthick,woodbroad,woodthick],center=true);
+        
+        //floorpieces
+        translate([-(northsouth-centernorth+doornorth/2)/2,0,woodthick/2])cube([northsouth-centernorth+doornorth-doorwidth/2,woodbroad,woodthick],center=true);
+    translate([(centernorth+doornorth+doorwidth/2)/2,0,woodthick/2])cube([centernorth-doornorth-doorwidth/2,woodbroad,woodthick],center=true);
+    //low-wallpieces 
+      translate([centernorth-woodthick/2,0,northlow/2+woodthick/2])cube([woodthick,woodbroad,northlow-woodthick],center=true); 
+      translate([-northsouth+centernorth+woodthick/2,0,northlow/2+woodthick/2])cube([woodthick,woodbroad,southlow-woodthick],center=true);  
+    //roofpieces    
+      translate([(centernorth-woodthick/2)/2,0,heigth-(heigth-northlow)/2])
+        rotate([0,-asin((centernorth-woodthick/2)/sqrt((heigth-northlow)*(heigth-northlow)+(centernorth-woodthick/2)*(centernorth-woodthick/2))),0])
+        cube([woodthick,woodbroad,sqrt((heigth-northlow)*(heigth-northlow)+(centernorth-woodthick/2)*(centernorth-woodthick/2))],center=true); 
+      translate([(-northsouth+centernorth+woodthick/2)/2,0,heigth-(heigth-southlow)/2])
+        rotate([0,asin((northsouth-centernorth-woodthick/2)/sqrt((northsouth-centernorth-woodthick/2)*(northsouth-centernorth-woodthick/2)+(heigth-southlow)*(heigth-southlow))),0])
+        cube([woodthick,woodbroad,sqrt((northsouth-centernorth-woodthick/2)*(northsouth-centernorth-woodthick/2)+(heigth-southlow)*(heigth-southlow))],center=true);   
+    }
+}
