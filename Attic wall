@@ -13,19 +13,49 @@ northlow=1426;
 northsouth=4761;
 heigth=2535;
 centernorth=2315;
-doorwidth=1200;
-doorheigth=1900;
+doorwidth=900;
+doorheigth=2000;
 doornorth=400;
 woodthick=50;
 woodbroad=100;
+karm=40;
+taklista=30;
+golvlista=50;
 
 doorpostnorthx=doorwidth/2+doornorth+woodthick/2;
 doorpostsouthx=-doorwidth/2+doornorth-woodthick/2;
 centersouth=(northsouth-centernorth);
 
-translate([0,woodbroad,0])rotate([90,0,0])linear_extrude(2)blueprint();
+translate([0,woodbroad/2+1,0])rotate([90,0,0])linear_extrude(2)blueprint();
 framework();
+karmer();
+taklist();
+golvlist();
 
+module taklist(){
+    color("beige"){
+       translate([(centernorth-golvlista/2)/2,60,heigth-(heigth-northlow)/2-golvlista/2])
+        rotate([0,-asin((centernorth-golvlista/2)/sqrt((heigth-northlow)*(heigth-northlow)+(centernorth-golvlista/2)*(centernorth-golvlista/2))),0])
+        cube([golvlista,10,sqrt((heigth-northlow)*(heigth-northlow)+(centernorth-golvlista/2)*(centernorth-golvlista/2))],center=true); 
+      translate([(-northsouth+centernorth+golvlista/2)/2,60,heigth-(heigth-southlow)/2-golvlista/2])
+        rotate([0,asin((northsouth-centernorth-golvlista/2)/sqrt((northsouth-centernorth-golvlista/2)*(northsouth-centernorth-golvlista/2)+(heigth-southlow)*(heigth-southlow))),0])
+        cube([golvlista,10,sqrt((northsouth-centernorth-golvlista/2)*(northsouth-centernorth-golvlista/2)+(heigth-southlow)*(heigth-southlow))],center=true); 
+    }
+}
+module golvlist(){
+    color("beige"){
+translate([-(northsouth-centernorth+doornorth/2)/2,60,golvlista/2])cube([northsouth-centernorth+doornorth-doorwidth/2,10,golvlista],center=true);
+    translate([(centernorth+doornorth+doorwidth/2)/2,60,golvlista/2])cube([centernorth-doornorth-doorwidth/2,10,golvlista],center=true);    
+}
+}
+module karmer(){
+    //dooropening:
+    color("beige"){
+    translate([-doorwidth/2+doornorth-karm/2,60,doorheigth/2+karm/2])cube([karm,10,doorheigth-karm],center=true);
+    translate([doorwidth/2+doornorth+karm/2,60,doorheigth/2+karm/2])cube([karm,10,doorheigth-karm],center=true);
+        translate([doornorth,60,doorheigth+karm/2])cube([doorwidth+2*karm,10,karm],center=true);
+}
+}
 module blueprint(){
     color("blue")polygon([[-doorwidth-doornorth,0],[-northsouth+centernorth,0],[-northsouth+centernorth,southlow],[0,heigth],[centernorth,northlow],[centernorth,0],[-doorwidth/2+doornorth,0],[-doorwidth/2+doornorth,doorheigth],[doorwidth/2+doornorth,doorheigth],[doorwidth/2+doornorth,0]]);
 }
@@ -43,10 +73,10 @@ module framework(){
       translate([centernorth-woodthick/2,0,northlow/2+woodthick/2])cube([woodthick,woodbroad,northlow-woodthick],center=true); 
       translate([-northsouth+centernorth+woodthick/2,0,northlow/2+woodthick/2])cube([woodthick,woodbroad,southlow-woodthick],center=true);  
     //roofpieces    
-      translate([(centernorth-woodthick/2)/2,0,heigth-(heigth-northlow)/2])
+      translate([(centernorth-woodthick/2)/2,0,heigth-(heigth-northlow)/2-woodthick/2])
         rotate([0,-asin((centernorth-woodthick/2)/sqrt((heigth-northlow)*(heigth-northlow)+(centernorth-woodthick/2)*(centernorth-woodthick/2))),0])
         cube([woodthick,woodbroad,sqrt((heigth-northlow)*(heigth-northlow)+(centernorth-woodthick/2)*(centernorth-woodthick/2))],center=true); 
-      translate([(-northsouth+centernorth+woodthick/2)/2,0,heigth-(heigth-southlow)/2])
+      translate([(-northsouth+centernorth+woodthick/2)/2,0,heigth-(heigth-southlow)/2-woodthick/2])
         rotate([0,asin((northsouth-centernorth-woodthick/2)/sqrt((northsouth-centernorth-woodthick/2)*(northsouth-centernorth-woodthick/2)+(heigth-southlow)*(heigth-southlow))),0])
         cube([woodthick,woodbroad,sqrt((northsouth-centernorth-woodthick/2)*(northsouth-centernorth-woodthick/2)+(heigth-southlow)*(heigth-southlow))],center=true);   
     //standers
