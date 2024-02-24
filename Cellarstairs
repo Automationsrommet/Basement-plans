@@ -1,0 +1,62 @@
+steghoyde=157;
+steglengde=285;
+rombredde=1415;
+murtrinnh=180;
+murtrinnl=300;
+totalhoyde=1550+murtrinnh;
+gulvhoyde=50;
+romlengde=3000;
+trinnh=36;
+antall=10;
+trinnstart=30;
+
+//En tommelfingerregel på en god trapp er å følge 2 x opptrinn + 1 x inntrinn = 62 cm ±2 cm
+echo(2*steghoyde+steglengde);
+rom();
+trinn();
+stendere();
+golv();
+
+module golv(){
+    cube([romlengde,rombredde,gulvhoyde],center=false);
+    translate([-murtrinnl-steglengde-190,0,totalhoyde])
+    cube([steglengde,rombredde-90,gulvhoyde],center=false);
+}
+module stendere(){
+     for (j=[-3:2:3]){ 
+    for (i=[2:1:antall]){
+      
+        translate([(i-1)*steglengde/2,rombredde/2+j*(rombredde-gulvhoyde*2-50)/6,totalhoyde-trinnh/2-steghoyde/2-i*steghoyde+gulvhoyde])
+ color("orange")cube([steglengde*(i-1)-20,50,steghoyde-trinnh],center=true);
+    }
+    
+    translate([-murtrinnl/2,rombredde/2+j*(rombredde-gulvhoyde*2-50)/6,totalhoyde-steghoyde-(murtrinnh-steghoyde-trinnh)/2-gulvhoyde/4])
+    color("orange")cube([murtrinnl,50,murtrinnh-steghoyde-trinnh+gulvhoyde],center=true);
+    
+    translate([-murtrinnl+(murtrinnl-steglengde-0)/2+1,rombredde/2+j*(rombredde-gulvhoyde*2-50)/6,totalhoyde-(murtrinnh-(murtrinnh-steghoyde-trinnh+gulvhoyde))/2])
+    color("brown")cube([murtrinnl-steglengde,50,murtrinnh-(murtrinnh-steghoyde-trinnh+gulvhoyde)],center=true);
+    
+    translate([-steglengde*1.5+6,rombredde/2+j*(rombredde-gulvhoyde*2-50)/6,totalhoyde+(gulvhoyde-trinnh)/2])
+    color("orange")cube([steglengde-10,50,gulvhoyde-trinnh],center=true);
+}
+}
+
+
+module trinn(){
+    translate([trinnstart-steglengde/2-murtrinnl,rombredde/2,totalhoyde-trinnh/2+gulvhoyde])
+ color("yellow")cube([steglengde+steglengde*0,rombredde-gulvhoyde*2,trinnh],center=true);
+    translate([trinnstart-steglengde/2-murtrinnl+1*steglengde,rombredde/2,totalhoyde-trinnh/2-1*steghoyde+gulvhoyde])
+ color("yellow")cube([steglengde+steglengde*0,rombredde-gulvhoyde*2,trinnh],center=true);
+    for (i=[2:1:antall])
+ translate([trinnstart+steglengde/2-murtrinnl+i*steglengde/2,rombredde/2,totalhoyde-trinnh/2-i*steghoyde+gulvhoyde])
+ color("yellow")cube([steglengde+steglengde*(i-2),rombredde-gulvhoyde*2,trinnh],center=true);   
+}
+
+module rom(){
+difference(){
+translate([-500,-200,-300])
+color("grey")cube([romlengde+499,rombredde+200-1,totalhoyde+299],center=false);
+color("grey")cube([romlengde,rombredde,totalhoyde],center=false);
+    translate([-murtrinnl+1,0,totalhoyde-murtrinnh])cube([murtrinnl,rombredde,murtrinnh],center=false);
+}    
+}
