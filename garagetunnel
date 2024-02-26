@@ -1,0 +1,118 @@
+steghoyde=157;
+steglengde=285;
+rombredde=1415;
+murtrinnh=180;
+murtrinnl=300;
+totalhoyde=1550+murtrinnh;
+gulvhoyde=50;
+romlengde=3000;
+trinnh=36;
+antall=10;
+trinnstart=30;
+rund=450;
+gods=100;
+ganghoyde=1800;
+
+//En tommelfingerregel på en god trapp er å følge 2 x opptrinn + 1 x inntrinn = 62 cm ±2 cm
+echo(2*steghoyde+steglengde);
+rom();
+//trinn();
+//stendere();
+golv();
+kant();
+tunnell();
+
+module tunnell(){
+intersection(){
+    translate([-murtrinnl,-210,totalhoyde+85])
+cube([romlengde+murtrinnl,rombredde+210,4000],center=false);    
+difference(){
+innslag();
+translate([steglengde/2,0,0])hule();
+}
+}
+}
+module innslag(){
+    translate([romlengde/2+300,rombredde/2-50,totalhoyde+-200-2*steglengde])
+    for (i=[-90:0.5:-60]){
+        rotate([0,i,0])
+       color("cyan")minkowski(){
+    cube([steglengde+steglengde*8,rombredde-gulvhoyde*2-2*rund,trinnh+ganghoyde-2*rund+400],center=true);
+    rotate([0,0,0])cylinder(steglengde*9,rund+gods,rund+gods,center=true); 
+          sphere(16); 
+ } 
+    }
+}
+module hule(){
+    translate([romlengde/2+300,rombredde/2,totalhoyde+-260])   
+        rotate([0,-60,0])
+       color("red")minkowski(){
+    cube([steglengde+steglengde*4,rombredde-gulvhoyde*2-2*rund,trinnh+ganghoyde-2*rund+2000],center=true);
+    rotate([0,0,0])cylinder(steglengde*9,rund,rund,center=true); 
+          sphere(16); 
+        
+    }
+    translate([romlengde/2+300,rombredde/2,totalhoyde+-260])   
+        rotate([0,-90,0])
+       color("red")minkowski(){
+    cube([steglengde+steglengde*4,rombredde-gulvhoyde*2-2*rund,trinnh+ganghoyde-2*rund+2000],center=true);
+    rotate([0,0,0])cylinder(steglengde*9,rund,rund,center=true); 
+          sphere(16); 
+        
+    }   
+}
+module kant(){
+   color("silver") translate([-230,-210,totalhoyde])cube([romlengde+230,210,85],center=false);
+}
+
+module golv(){
+    cube([romlengde,rombredde,gulvhoyde],center=false);
+    translate([-murtrinnl-steglengde-1110,0,totalhoyde])
+    cube([1135,rombredde,gulvhoyde],center=false);
+    difference(){
+        translate([-1200-murtrinnl-200,-2500-210,totalhoyde])
+    cube([romlengde+1200+murtrinnl+200,2500+210,gulvhoyde],center=false);
+        minkowski(){
+        kant();
+        cube(10,center=true);
+            }
+    }
+}
+module stendere(){
+     for (j=[-3:2:3]){ 
+    for (i=[2:1:antall]){
+      
+        translate([(i-1)*steglengde/2,rombredde/2+j*(rombredde-gulvhoyde*2-50)/6,totalhoyde-trinnh/2-steghoyde/2-i*steghoyde+gulvhoyde])
+ color("orange")cube([steglengde*(i-1)-20,50,steghoyde-trinnh],center=true);
+    }
+    
+    translate([-murtrinnl/2,rombredde/2+j*(rombredde-gulvhoyde*2-50)/6,totalhoyde-steghoyde-(murtrinnh-steghoyde-trinnh)/2-gulvhoyde/4])
+    color("orange")cube([murtrinnl,50,murtrinnh-steghoyde-trinnh+gulvhoyde],center=true);
+    
+    translate([-murtrinnl+(murtrinnl-steglengde-0)/2+1,rombredde/2+j*(rombredde-gulvhoyde*2-50)/6,totalhoyde-(murtrinnh-(murtrinnh-steghoyde-trinnh+gulvhoyde))/2])
+    color("brown")cube([murtrinnl-steglengde,50,murtrinnh-(murtrinnh-steghoyde-trinnh+gulvhoyde)],center=true);
+    
+    translate([-steglengde*1.5+6,rombredde/2+j*(rombredde-gulvhoyde*2-50)/6,totalhoyde+(gulvhoyde-trinnh)/2])
+    color("orange")cube([steglengde-10,50,gulvhoyde-trinnh],center=true);
+}
+}
+
+
+module trinn(){
+    translate([trinnstart-steglengde/2-murtrinnl,rombredde/2,totalhoyde-trinnh/2+gulvhoyde])
+ color("yellow")cube([steglengde+steglengde*0,rombredde-gulvhoyde*2,trinnh],center=true);
+    translate([trinnstart-steglengde/2-murtrinnl+1*steglengde,rombredde/2,totalhoyde-trinnh/2-1*steghoyde+gulvhoyde])
+ color("yellow")cube([steglengde+steglengde*0,rombredde-gulvhoyde*2,trinnh],center=true);
+    for (i=[2:1:antall])
+ translate([trinnstart+steglengde/2-murtrinnl+i*steglengde/2,rombredde/2,totalhoyde-trinnh/2-i*steghoyde+gulvhoyde])
+ color("yellow")cube([steglengde+steglengde*(i-2),rombredde-gulvhoyde*2,trinnh],center=true);   
+}
+
+module rom(){
+difference(){
+translate([-500-1200,-200-2500,-300])
+color("grey")cube([romlengde+499+1200,rombredde+200-1+2500,totalhoyde+299],center=false);
+color("grey")cube([romlengde,rombredde,totalhoyde],center=false);
+    translate([-murtrinnl+1,0,totalhoyde-murtrinnh])cube([murtrinnl,rombredde,murtrinnh],center=false);
+}    
+}
