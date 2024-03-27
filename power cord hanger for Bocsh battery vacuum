@@ -1,0 +1,73 @@
+hoy=58;
+brei=37;
+offset=10;
+pinneavstand=18;
+pinnelengde=20;
+pinnebredde=5;
+sokkellengde=15;
+sokkelbredde=12;
+margin=1;
+
+
+difference(){
+    hanger();
+    plug();
+    coil();
+    mirror([0,0,0])plugrest();
+mirror([1,0,0])plugrest();
+    translate([0,-8,-2])screw();
+translate([0,25,-2])screw();
+}
+
+module plug(){
+ 
+minkowski(){
+union(){
+for(i=[-1:2:1])translate([i*pinneavstand/2,0,0])
+    rotate([180,0,0])
+cylinder(pinnelengde,pinnebredde/2,pinnebredde/2,center=false);
+linear_extrude(sokkellengde)
+minkowski(){
+    square([pinneavstand+pinnebredde/2,pinnebredde],center=true);
+    rotate(45)square(sokkelbredde,center=true);
+    
+    }
+    translate([0,offset,sokkellengde+20])
+    cube([brei,hoy,40],center=true);
+}
+ sphere(margin);
+}   
+}
+module hanger(){
+color("green")translate([-9,hoy/2+offset+5,0])
+    cylinder(30,5,3,center=false);
+    color("green")translate([9,hoy/2+offset+5,0])
+    cylinder(30,5,3,center=false);
+    color("green")translate([0,offset,-40+pinnelengde+sokkellengde+5])
+minkowski(){
+    cube([brei+5,hoy+5,30],center=true);
+sphere(6,$fn=6);
+    }
+}
+module coil(){
+  for(j=[0:10:360])rotate([0,0,j])
+translate([37+10*sin(j),0,0])rotate([90,0,0])cylinder(20,13,13,center=true); 
+}
+module plugrest(){    
+//0 til 6, 12 til 16
+    translate([23,18,13])
+rotate([-60,0,-90]){
+ cylinder(32,2,2,center=true);
+   translate([11,0,0]) 
+ cylinder(12,3,3,center=true);
+    translate([0,0,3]) 
+ cylinder(5,6,6,center=true);
+    }
+}
+module screw(){
+  cylinder(100,2,2,center=true);
+   translate([0,0,10])
+  cylinder(20,6,6,center=true); 
+    translate([0,0,-3])
+  cylinder(6,2,6,center=true);
+}
