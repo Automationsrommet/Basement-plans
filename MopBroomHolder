@@ -1,0 +1,40 @@
+diameter=73;
+thickness=7;
+difference(){
+block();
+mop();
+translate([20,10,3])screw();
+translate([-20,10,3])screw();
+tekst();
+}
+module tekst(){
+    translate([-35,-10,-1.8])
+    rotate([30,0,0])
+    linear_extrude(2)text("Vaskekost",11);
+}
+module screw(){
+  cylinder(100,2,2,center=true);
+   translate([0,0,10])
+  cylinder(20,6,6,center=true); 
+    translate([0,0,-3])
+  cylinder(6,2,6,center=true);
+}
+module block(){
+    minkowski(){
+    difference(){
+cylinder(10,(diameter+thickness)/2,(diameter+thickness)/2,center=true);
+  translate([0,-20,50])
+    rotate([30,0,0])
+    cube(100,center=true);  
+}
+sphere(1,$fn=6);
+}
+}
+
+module mop(){
+for(i=[-90:10:90])
+rotate([0,0,i])
+translate([0,(diameter+thickness)/2,0])
+rotate([0,90,0])
+cylinder(30,thickness/2,thickness/2,center=true);
+}
