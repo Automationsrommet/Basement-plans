@@ -1,0 +1,64 @@
+handledia=30;
+radius=40;
+offwall=20;
+
+difference(){
+minkowski(){
+    union(){
+block();
+wings();
+    }
+  sphere(1.5,$fn=6);  
+}
+tekst();
+translate([16,-9,5])screw();
+translate([-16,-9,5])screw();
+bow();
+}
+module wings(){
+   for(j=[0:1:1])mirror([j,0,0])
+    intersection(){
+    difference(){  
+    translate([handledia/2+radius,-radius,5])
+    rotate([22,22,0])
+    cylinder(50,radius,radius,center=true);
+    translate([70,-70,10])
+    rotate([18,00,45])
+    cube(110,center=true);
+    }
+    translate([0,00,7])
+    rotate([0,00,0])
+    cube([110,110,20],center=true);
+}
+}
+module bow(){
+    for(j=[0:1:1])mirror([j,0,0])
+    for(i=[0:2:90])
+    translate([handledia/2+radius,-radius,offwall-5])
+    rotate([0,0,-i])
+    translate([-radius,0,0])
+    rotate([90,0,0])
+    cylinder(15,3.2,3.2,center=true);
+}
+module block(){
+    difference(){        
+    translate([0,0,0])
+    rotate([0,0,45])
+    cube([77,77,10],center=true);
+     translate([0,70,10])
+    rotate([-45,0,0])
+    cube(110,center=true);
+    }
+}
+module tekst(){
+    translate([-4,-5,5])
+    rotate([00,0,-90])
+    linear_extrude(2)text("Langkost",8);
+}
+module screw(){
+  cylinder(100,2,2,center=true);
+   translate([0,0,10])
+  cylinder(20,6,6,center=true); 
+    translate([0,0,-3])
+  cylinder(6,2,6,center=true);
+}
