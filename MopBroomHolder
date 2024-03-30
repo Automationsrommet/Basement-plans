@@ -22,7 +22,7 @@ module screw(){
 module block(){
     minkowski(){
     difference(){
-cylinder(10,(diameter+thickness)/2,(diameter+thickness)/2,center=true);
+cylinder(10,(diameter+thickness)/2,(diameter+thickness)/2-2,center=true);
   translate([0,-20,50])
     rotate([30,0,0])
     cube(100,center=true);  
