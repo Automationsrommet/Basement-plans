@@ -1,4 +1,4 @@
-handledia=30;
+handledia=25;
 radius=40;
 offwall=20;
 
@@ -11,18 +11,26 @@ wings();
   sphere(1.5,$fn=6);  
 }
 tekst();
-translate([16,-9,5])screw();
-translate([-16,-9,5])screw();
+translate([16,-9,3])screw();
+translate([-16,-9,3])screw();
 bow();
+translate([0,0,13])
+rotate([0,90,0])
+cylinder(120,5,5,center=true);
+translate([0,0,15])
+rotate([90,0,0])
+cylinder(120,handledia/2+2,handledia/2+2,center=true);
 }
+
+
 module wings(){
    for(j=[0:1:1])mirror([j,0,0])
     intersection(){
     difference(){  
-    translate([handledia/2+radius,-radius,5])
+    translate([handledia/2+radius,-radius-0,1])
     rotate([22,22,0])
     cylinder(50,radius,radius,center=true);
-    translate([70,-70,10])
+    translate([71,-71,10])
     rotate([18,00,45])
     cube(110,center=true);
     }
@@ -38,20 +46,20 @@ module bow(){
     rotate([0,0,-i])
     translate([-radius,0,0])
     rotate([90,0,0])
-    cylinder(15,3.2,3.2,center=true);
+    cylinder(17,3.2,3.2,center=true);
 }
 module block(){
     difference(){        
-    translate([0,0,0])
+    translate([0,0,-2.5])
     rotate([0,0,45])
-    cube([77,77,10],center=true);
+    cube([77,77,1],center=true);
      translate([0,70,10])
     rotate([-45,0,0])
     cube(110,center=true);
     }
 }
 module tekst(){
-    translate([-4,-5,5])
+    translate([-4,-5,-1])
     rotate([00,0,-90])
     linear_extrude(2)text("Langkost",8);
 }
