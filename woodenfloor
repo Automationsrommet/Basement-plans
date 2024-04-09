@@ -1,0 +1,26 @@
+bredde=180;
+lengde=1200;
+kant=10;
+breddejustering=100;
+lengdejustering=200;
+
+intersection(){
+parkett();
+union(){
+kontor();
+stue();
+}
+}
+
+module kontor(){
+ polygon([[0,0],[0,4720],[-(4780-2550),4720],[-(4780-2550),4720-2130],[-4780,4720-2130],[-4780,4720-2130-1600],[-2060,4720-2130-1600],[-2060,0]]);  
+}
+module stue(){
+  polygon([[0,4820],[0,4820+6150],[-4780,4820+6150],[-4780,4820],[0,4820],[-4780+790+570,4820+2350],[-4780+790+570,4820+2350+560],[-4780+790,4820+2350+560],[-4780+790,4820+2350],[-4780+790+570,4820+2350]]);  
+}  
+module parkett(){
+    for(i=[-5000:bredde:bredde])
+    for(j=[0:lengde:33000])
+    translate([i+breddejustering,j+i/bredde*lengde/3+lengdejustering])
+ square([bredde-kant,lengde-kant],center=true);   
+}
