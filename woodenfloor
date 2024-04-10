@@ -1,8 +1,9 @@
 bredde=180;
-lengde=1200;
-kant=10;
-breddejustering=100;
-lengdejustering=200;
+lengde=1800;
+kant=30;
+breddejustering=90;
+lengdejustering=370;
+omlegg=3;
 
 intersection(){
 parkett();
@@ -11,7 +12,14 @@ kontor();
 stue();
 }
 }
+color("red")sprinkler();
 
+echo(4770/180);
+echo(4770-(26*180));
+
+module sprinkler(){
+    polygon([[-4780,4720-2130-1600+100],[-2060,4720-2130-1600+100],[-2060,4720-2130-1600],[-4780,4720-2130-1600]]);
+}
 module kontor(){
  polygon([[0,0],[0,4720],[-(4780-2550),4720],[-(4780-2550),4720-2130],[-4780,4720-2130],[-4780,4720-2130-1600],[-2060,4720-2130-1600],[-2060,0]]);  
 }
@@ -21,6 +29,6 @@ module stue(){
 module parkett(){
     for(i=[-5000:bredde:bredde])
     for(j=[0:lengde:33000])
-    translate([i+breddejustering,j+i/bredde*lengde/3+lengdejustering])
+    translate([i+breddejustering,j+i/bredde*lengde/omlegg+lengdejustering])
  square([bredde-kant,lengde-kant],center=true);   
 }
