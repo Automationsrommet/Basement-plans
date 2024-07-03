@@ -1,0 +1,12 @@
+$fn=50;
+
+difference(){
+intersection(){
+cylinder(20,9,9,center=false);
+translate([0,0,10])
+resize([16,16,50])sphere(8);
+}
+
+cylinder(10,3,3,center=false);
+cylinder(50,2.5,2.5,center=false);
+}
