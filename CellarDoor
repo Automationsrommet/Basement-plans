@@ -1,0 +1,79 @@
+// parametric cellar plan
+
+length=11000;
+openingsouth=1000;
+openingnorth=1000;
+openingsouthpos=2500;
+openingnorthpos=6000;
+south=3000;
+center=4000;
+north=3000;
+wall=200;
+offcenter=800;
+door=900;
+hall=1100;
+
+outline();
+labels();
+
+module labels(){
+  translate([south+2*wall, door])
+  text("Magasin",200);
+  translate([south+3*wall+ center, door])
+  text("Matbod",200);  
+    translate([south+4*wall+center/2, door])
+  text("Ved",200);
+    translate([south+4*wall+center/2, door*2])
+  text("Fryser",200);
+    translate([door, door])
+  text("Snekkerbu",200);
+   translate([door, length/2-door])
+  text("Automationsrom",200); 
+    translate([door, length/2+door])
+  text("Musikkrom",200);
+    translate([door, length-door])
+  text("Radiorom",200);
+    translate([south+door*2, length-door])
+  text("Yttergang",200);
+    translate([south+door, length-door*2])
+  text("Badstu",200);
+    translate([south+door, length-door*3])
+  text("Pipe",200);
+    translate([south+door, length-door*4])
+  text("Dusj",200);
+    translate([south+door, length-door*6])
+  text("toalett",200);
+    translate([south+3*wall+ center, length-door])
+  text("Metallverksted",200);  
+    translate([south+3*wall+ center, length-2*door])
+  text("Plastverksted",200);
+translate([south+5*wall+ center, length-4*door])
+  text("Datalaboratorium",200);  
+}
+
+module outline(){
+    difference(){
+     translate([-wall,-wall])
+    square([center+north+south+4*wall, length+2*wall],center=false);   
+    square([south,length],center=false);
+    translate([south+wall,0])
+    square([center, length],center=false);
+    translate([south+wall+center+wall,0])
+    square([north, length],center=false);
+    translate([south,openingsouthpos])
+    square([wall, openingsouth],center=false);
+    translate([south+wall+center,openingnorthpos])
+    square([wall, openingnorth],center=false);
+    translate([south+wall+center/2+offcenter,-wall/2])
+    square([door,wall],center=true);   
+        
+    }
+    difference(){
+    translate([south+center/2,-hall-wall*2])
+    square([center/2+2*wall,hall+wall],center=false);
+        translate([south+wall+center/2,-hall-wall])
+    square([center/2,hall],center=false);
+        translate([south+center/2,-hall/2-wall])
+    square([center/2+2*wall,door],center=true);
+    }
+}
