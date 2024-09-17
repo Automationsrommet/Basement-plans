@@ -17,7 +17,7 @@ bow();
 translate([0,0,13])
 rotate([0,90,0])
 cylinder(120,5,5,center=true);
-translate([0,0,15])
+translate([0,0,11])
 rotate([90,0,0])
 cylinder(120,handledia/2+2,handledia/2+2,center=true);
 }
@@ -50,16 +50,16 @@ module bow(){
 }
 module block(){
     difference(){        
-    translate([0,0,-2.5])
+    translate([0,0,-7.5])
     rotate([0,0,45])
-    cube([77,77,1],center=true);
+    cube([77,77,11],center=true);
      translate([0,70,10])
     rotate([-45,0,0])
     cube(110,center=true);
     }
 }
 module tekst(){
-    translate([-4,-5,-1])
+    translate([-4,-5,-4])
     rotate([00,0,-90])
     linear_extrude(2)text("Langkost",8);
 }
@@ -69,4 +69,6 @@ module screw(){
   cylinder(20,6,6,center=true); 
     translate([0,0,-3])
   cylinder(6,2,6,center=true);
+}
+
 }
