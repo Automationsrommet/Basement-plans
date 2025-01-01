@@ -1,0 +1,25 @@
+hoy=20;
+skuffe=15.5;
+gods=2;
+merke="KOSTYMER";
+lengde=len(merke)*15-1;
+intersection(){
+difference(){
+translate([lengde-2,17,-2])
+rotate([0,+90,180])
+linear_extrude(lengde)
+polygon([[0,0],[skuffe,0],[skuffe-1,hoy],[skuffe+gods-1,hoy],[skuffe+gods,-gods],[-gods,-gods],[-gods,hoy],[0,hoy]]);
+
+minkowski(){
+linear_extrude(0.5)
+text(merke,15);
+cylinder(2,0,1.5,center=true);
+}
+
+}
+minkowski(){
+translate([-0,-2,-skuffe-2])
+cube ([lengde-3,hoy,skuffe+1],center=false);
+    sphere(0.9,$fn=10);
+}
+}
