@@ -1,0 +1,126 @@
+//Glunten trenger hyller til lego-lagring
+hyllebredde=100;
+tykkelse=10;
+knektbredde=16;
+knottlengde=2;
+runding=20;
+senteravstand=8;
+knottdia=5;
+fase=70;
+belegg=3;
+$fn=30;
+
+durt();
+knekten();
+
+module durt(){
+difference(){
+minkowski(){
+intersection(){
+for (i=[-1:2:1])
+translate([(hyllebredde*1.5-runding*0.5)*i,belegg,hyllebredde*0.5+belegg])
+cube([runding,tykkelse, hyllebredde],center=true);
+plate();
+}
+sphere(belegg,$fn=7);
+}
+plate();
+for (l=[-1:2:1]){
+translate([(hyllebredde*1.5+12)*l,1,hyllebredde+10])
+rotate([180,45*l,-0])
+skruehull();
+translate([(hyllebredde*1.5+24)*l,1,6])
+rotate([180,90*l,-0])
+skruehull();
+}
+}
+for (j=[-1:2:1])
+for (k=[senteravstand*2:2*senteravstand:hyllebredde-runding]){
+translate([(hyllebredde*1.5+belegg)*j,1,k])
+rotate([0,j*-90,-0])
+firer();
+translate([(hyllebredde*1.5-senteravstand*1.5)*j,tykkelse/2+belegg,k])
+rotate([90,0,-0])
+firer();
+translate([(hyllebredde*1.5-senteravstand*1.8)*j,1,hyllebredde+1.8])
+rotate([180,15*j,-0])
+firer();
+
+}
+}
+module plate(){
+translate([0,0,(hyllebredde)/2])
+cube([hyllebredde*3-2*runding,tykkelse,hyllebredde],center=true);
+translate([0,0,(hyllebredde-runding)/2])
+cube([hyllebredde*3,tykkelse,hyllebredde-runding],center=true);
+for(i=[-1:2:1])
+translate([i*(hyllebredde*1.5-runding),0,hyllebredde-20])
+rotate([90,0,0])
+cylinder(tykkelse,runding,runding,center=true);
+}
+
+module knekten(){
+difference(){
+knekt();
+huller();
+}
+knotter();
+}
+module huller(){
+for(i=[-1:2:1])
+for (j=[-1:2:1]){
+rotate([90,0,i*45])
+translate([0,0,8])
+skruehull();
+}
+}
+
+module skruehull(){
+cylinder(20,5,4,center=false);
+translate([0,0,20])
+cylinder(6,4,0,center=false);
+translate([0,0,20])
+cylinder(40,2,2,center=false);
+}
+module knotter(){
+for (i=[-1:2:1])
+translate([i*40,0,0])
+rotate([90,90+i*90,0])
+firer();
+translate([0,22,0])
+for (j=[-1:1:1])
+rotate([0,0,j*40])
+translate([0,-18-22,0])
+rotate([90,0,0])
+firer();
+for(k=[-1:2:1])
+translate([0,-29,k*knektbredde/2])
+rotate([0,k*90+90,0])
+firer();
+}
+
+module firer (){
+intersection(){
+for(i=[-1:2:1])
+for (j=[-1:2:1])
+translate([senteravstand/2*i,senteravstand/2*j,0])
+cylinder(knottlengde*2,knottdia/2,knottdia/2,center=true);
+translate([1,0,-7])
+rotate([45,0,90])
+cube(20,center=true);
+}
+}
+module knekt(){
+translate([0,0,-knektbredde/2])
+linear_extrude(knektbredde)
+polygon([[-hyllebredde*2/3*sqrt(2)/2,0],
+[0,-hyllebredde*2/3*sqrt(2)/2],[hyllebredde*2/3*sqrt(2)/2,0],
+
+for(i=[90:-10:-90])
+[
+i*0.4
+,
+-hyllebredde/5*cos(i)
+]
+]);
+}
