@@ -1,6 +1,6 @@
 //Glunten trenger hyller til lego-lagring
-hyllebredde=100;
-tykkelse=10;
+hyllebredde=130;
+tykkelse=12;
 knektbredde=16;
 knottlengde=2;
 runding=20;
@@ -10,7 +10,7 @@ fase=70;
 belegg=3;
 $fn=30;
 
-durt();
+//durt();
 knekten();
 
 module durt(){
@@ -39,14 +39,19 @@ for (k=[senteravstand*2:2*senteravstand:hyllebredde-runding]){
 translate([(hyllebredde*1.5+belegg)*j,1,k])
 rotate([0,j*-90,-0])
 firer();
-translate([(hyllebredde*1.5-senteravstand*1.5)*j,tykkelse/2+belegg,k])
+translate([(hyllebredde*1.5-senteravstand*1.5)*j,tykkelse/2+belegg,k+2*senteravstand])
 rotate([90,0,-0])
 firer();
-translate([(hyllebredde*1.5-senteravstand*1.8)*j,1,hyllebredde+1.8])
-rotate([180,15*j,-0])
+translate([(hyllebredde*1.5-senteravstand*1.5)*j,tykkelse/2+belegg,2*senteravstand])
+rotate([90,0,-0])
 firer();
-
+for(r=[3:38:80])
+translate([(hyllebredde*1.5-runding)*j,1,hyllebredde-runding])
+rotate([90+90*j,90-r*j,0])
+translate([0,0,-runding-2.5])
+firer();
 }
+
 }
 module plate(){
 translate([0,0,(hyllebredde)/2])
@@ -63,6 +68,7 @@ module knekten(){
 difference(){
 knekt();
 huller();
+forsterking();
 }
 knotter();
 }
@@ -70,7 +76,7 @@ module huller(){
 for(i=[-1:2:1])
 for (j=[-1:2:1]){
 rotate([90,0,i*45])
-translate([0,0,8])
+translate([0,0,8+(hyllebredde-100)/3])
 skruehull();
 }
 }
@@ -80,25 +86,33 @@ cylinder(20,5,4,center=false);
 translate([0,0,20])
 cylinder(6,4,0,center=false);
 translate([0,0,20])
-cylinder(40,2,2,center=false);
+cylinder(hyllebredde/3,2,2,center=false);
+translate([0,0,20+hyllebredde/3])
+cylinder(20,2,1,center=false);
 }
 module knotter(){
 for (i=[-1:2:1])
-translate([i*40,0,0])
+translate([i*(40+(hyllebredde-100)/4),0,0])
 rotate([90,90+i*90,0])
 firer();
 translate([0,22,0])
 for (j=[-1:1:1])
 rotate([0,0,j*40])
-translate([0,-18-22,0])
+translate([0,-18-22-(hyllebredde-100)/4.5+j*j*6,0])
 rotate([90,0,0])
 firer();
 for(k=[-1:2:1])
-translate([0,-29,k*knektbredde/2])
+translate([0,-29-(hyllebredde-100)/4,k*knektbredde/2])
 rotate([0,k*90+90,0])
 firer();
 }
-
+module forsterking(){
+for(i=[0:1:1])
+rotate([0,180*i,0])
+translate([-19,-(hyllebredde*sqrt(2))/3-15+6,5])
+rotate([-45,90,0])
+skruehull();
+}
 module firer (){
 intersection(){
 for(i=[-1:2:1])
