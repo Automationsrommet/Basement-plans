@@ -11,22 +11,39 @@
 //53*53 kun glass
 
 gulv();
-translate([6750-200,-4600,0])peis();
+translate([6750-200,-4600+40,0])peis();
 vinduer();
 translate([6740-100,-1000,0])doer(90,210);
 translate([6740-100,-1000-2150-100,0])doer(215,210);
+color("beige")reisverk();
+module reisverk(){
+for (i=[0:1:2])translate([0,-100-i*1300,0])cube([150,100,2100],center=false);
+translate([0,-4000,0])cube([100,100,2100],center=false);
 
+translate([2650-1540-150,-4000,0])cube([100,150,2100],center=false);
+translate([2650-50,-4000,0])rotate([0,0,-0])cube([100,150,2100],center=false);
+translate([2650,-4000,0])rotate([0,0,-9])translate([1540+50,0,0])cube([100,150,2100],center=false);
+
+translate([2650,-4000,0])rotate([0,0,-9])translate([1540+150+830,50,0])cube([100,150,2100],center=false);
+translate([2650,-4000,1500])rotate([0,0,-9])translate([1540+1150+530,50,0])cube([100,100,2100-1500],center=false);
+translate([6750,-4000+1000-380,1500])rotate([0,0,-9-90])translate([+1040,-100,0])cube([100,100,2100-1500],center=false);
+
+translate([6740-150,-100,0])cube([150,100,2100],center=false);
+translate([6740-150,-1000-100,0])cube([150,100,2100],center=false);
+translate([6740-150,-1000-2150-100-100,0])cube([150,100,2100],center=false);
+translate([6740-150,-4600+20,0])cube([150,100,2100],center=false);
+}
 module vinduer(){
 //natre();
 for (i=[0:1:2])translate([50,-700-i*1300,2100-1200])godegamle();
 translate([2650-1540-50,-4000+50,2100-1640])kunglass(154,164);
 translate([2650+50,-4000+50,2100-1640])rotate([0,0,-9])kunglass(154,164);
-translate([100,-4000+50,50])kunglass(83,104);
+translate([120,-4000+50,20])kunglass(83,104);
 
-translate([100,-4000+50,50+1050])kunglass(83,104);
-translate([2650,-4000,50])rotate([0,0,-9])translate([1540+150,50,0])kunglass(83,104);
+translate([120,-4000+50,10+1050])kunglass(83,104);
+translate([2650,-4000,20])rotate([0,0,-9])translate([1540+150,50,0])kunglass(83,104);
 
-translate([2650,-4000,50+1050])rotate([0,0,-9])translate([1540+150,50,0])kunglass(83,104);
+translate([2650,-4000,10+1050])rotate([0,0,-9])translate([1540+150,50,0])kunglass(83,104);
 translate([2650,-4000,2100-530])rotate([0,0,-9])translate([1540+1150,50,0])kunglass(53,53);
 translate([6750,-4000+1000-380,2100-430])rotate([0,0,-9-90])translate([0,-50,0])kunglass(104,43);
 }
@@ -61,7 +78,7 @@ color("chocolate")translate([0,0,-20])
 linear_extrude(20)
 polygon([[0,0],[6750,0],[6750,-4600],[2650,-4000],[0,-4000]]);
 }
-module peis(){rotate([0,0,-9])
+module peis(){rotate([0,0,-8])
 color("black")linear_extrude(1500)
 polygon([[0,0],[-1280,0],[-1280,150],[-150,150],[-150,1200],[0,1200]]);
 }
