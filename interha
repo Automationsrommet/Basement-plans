@@ -1,0 +1,67 @@
+//Vinduer
+//164*154*2 kun glass
+//83*104*5 kun glass
+//93*104*1 kun glass
+//99*109*1 Natre husmor
+//104*103*2
+//104*123*1
+//120*120*3 gode gamle vinduer.
+//106*45
+//104*35
+//53*53 kun glass
+
+gulv();
+translate([6750-200,-4600,0])peis();
+vinduer();
+translate([6740-100,-1000,0])doer(90,210);
+translate([6740-100,-1000-2150-100,0])doer(215,210);
+
+module vinduer(){
+//natre();
+for (i=[0:1:2])translate([50,-700-i*1300,2100-1200])godegamle();
+translate([2650-1540-50,-4000+50,2100-1640])kunglass(154,164);
+translate([2650+50,-4000+50,2100-1640])rotate([0,0,-9])kunglass(154,164);
+translate([100,-4000+50,50])kunglass(83,104);
+
+translate([100,-4000+50,50+1050])kunglass(83,104);
+translate([2650,-4000,50])rotate([0,0,-9])translate([1540+150,50,0])kunglass(83,104);
+
+translate([2650,-4000,50+1050])rotate([0,0,-9])translate([1540+150,50,0])kunglass(83,104);
+translate([2650,-4000,2100-530])rotate([0,0,-9])translate([1540+1150,50,0])kunglass(53,53);
+translate([6750,-4000+1000-380,2100-430])rotate([0,0,-9-90])translate([0,-50,0])kunglass(104,43);
+}
+
+module doer(b,h){
+cube([100,b*10,h*10],center=false);
+}
+module kunglass(l,h){
+cube([l*10,20,h*10],center=false);
+}
+module godegamle(){
+translate([0,0,1090/2])
+difference(){
+cube([100,1200,1200],center=true);
+for(i=[-1:2:1])
+translate([i*55,0,0])
+cube([100,1200-100,1200-100],center=true);
+}
+}
+module natre(){
+translate([0,0,1090/2])
+difference(){
+cube([100,990,1090],center=true);
+for(i=[-1:2:1])
+translate([i*55,0,0])
+cube([100,990-100,1090-100],center=true);
+}
+}
+
+module gulv(){
+color("chocolate")translate([0,0,-20])
+linear_extrude(20)
+polygon([[0,0],[6750,0],[6750,-4600],[2650,-4000],[0,-4000]]);
+}
+module peis(){rotate([0,0,-9])
+color("black")linear_extrude(1500)
+polygon([[0,0],[-1280,0],[-1280,150],[-150,150],[-150,1200],[0,1200]]);
+}
