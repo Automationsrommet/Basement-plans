@@ -9,29 +9,72 @@
 //106*45
 //104*35
 //53*53 kun glass
+takvinkel=10;
+overtak=1100+2100;
 
 gulv();
 translate([6750-200,-4600+40,0])peis();
 vinduer();
 translate([6740-100,-1000,0])doer(90,210);
 translate([6740-100,-1000-2150-100,0])doer(215,210);
-color("beige")reisverk();
+takbjelker();
+taktro();
+membran();
+color("beige")difference(){
+reisverk();
+translate([0,0,overtak+15000])
+rotate([takvinkel,0,0])cube(30000,center=true);
+}
+translate([-300,0,3370])alsvaagplate();
+module alsvaagplate(){
+color("black")
+rotate([90+takvinkel,0,0])
+linear_extrude(5000)
+polygon([
+for(i=[0:30:360*22.5])[i*0.9,50*sin(i)],
+for(j=[0:30:360*22.5])[j*0.9+3,50*-sin(-j)]
+]);
+}
+module takbjelker(){
+for (i =[0:600:7000]){
+rotate([0,0,180])
+translate([-50-i,-100,overtak-200])
+rotate([-takvinkel,0,0])
+cube([50,5000,200],center=false);
+}
+}
+module taktro(){
+for (i =[0:140:5000]){
+rotate([takvinkel,0,0])
+translate([-300,500-i,overtak])
+//rotate([-takvinkel,0,0])
+cube([7300,140,20],center=false);
+}
+}
+module membran(){
+color("white")
+//rotate([takvinkel,0,0])
+translate([-300,0,overtak+100])
+rotate([takvinkel+180,0,0])
+cube([7300,5000,2],center=false);
+//}
+}
 module reisverk(){
-for (i=[0:1:2])translate([0,-100-i*1300,0])cube([150,100,2100],center=false);
-translate([0,-4000,0])cube([100,100,2100],center=false);
+for (i=[0:1:2])translate([0,-100-i*1300,0])cube([150,100,5000],center=false);
+translate([0,-4000,0])cube([100,100,5000],center=false);
 
-translate([2650-1540-150,-4000,0])cube([100,150,2100],center=false);
-translate([2650-50,-4000,0])rotate([0,0,-0])cube([100,150,2100],center=false);
-translate([2650,-4000,0])rotate([0,0,-9])translate([1540+50,0,0])cube([100,150,2100],center=false);
+translate([2650-1540-150,-4000,0])cube([100,150,5000],center=false);
+translate([2650-50,-4000,0])rotate([0,0,-0])cube([100,150,5000],center=false);
+translate([2650,-4000,0])rotate([0,0,-9])translate([1540+50,0,0])cube([100,150,5000],center=false);
 
-translate([2650,-4000,0])rotate([0,0,-9])translate([1540+150+830,50,0])cube([100,150,2100],center=false);
-translate([2650,-4000,1500])rotate([0,0,-9])translate([1540+1150+530,50,0])cube([100,100,2100-1500],center=false);
-translate([6750,-4000+1000-380,1500])rotate([0,0,-9-90])translate([+1040,-100,0])cube([100,100,2100-1500],center=false);
+translate([2650,-4000,0])rotate([0,0,-9])translate([1540+150+830,50,0])cube([100,150,5000],center=false);
+translate([2650,-4000,1500])rotate([0,0,-9])translate([1540+1150+530,50,0])cube([100,100,5000],center=false);
+translate([6750,-4000+1000-380,1500])rotate([0,0,-9-90])translate([+1040,-100,0])cube([100,100,5000],center=false);
 
-translate([6740-150,-100,0])cube([150,100,2100],center=false);
-translate([6740-150,-1000-100,0])cube([150,100,2100],center=false);
-translate([6740-150,-1000-2150-100-100,0])cube([150,100,2100],center=false);
-translate([6740-150,-4600+20,0])cube([150,100,2100],center=false);
+translate([6740-150,-100,0])cube([150,100,5000],center=false);
+translate([6740-150,-1000-100,0])cube([150,100,5000],center=false);
+translate([6740-150,-1000-2150-100-100,0])cube([150,100,5000],center=false);
+translate([6740-150,-4600+20,0])cube([150,100,5000],center=false);
 }
 module vinduer(){
 //natre();
