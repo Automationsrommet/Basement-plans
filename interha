@@ -1,19 +1,23 @@
 //Vinduer
 //164*154*2 kun glass
 //83*104*5 kun glass
-//93*104*1 kun glass
-//99*109*1 Natre husmor
-//104*103*2
-//104*123*1
+//93*104*1 kun glass    ubrukt her
+//99*109*1 Natre husmor ubrukt her
+//104*103*2             ubrukt her
+//104*123*1             ubrukt her
 //120*120*3 gode gamle vinduer.
 //106*45
-//104*35
+//104*35                ubrukt her
 //53*53 kun glass
 takvinkel=10;
 overtak=1100+2100;
 
+storbjelker();
+golvbjelker();
+//undergolv();
 gulv();
-translate([6750-200,-4600+40,0])peis();
+//translate([6750-200,-4600+40,0])peis();
+//translate([6750-200,-4600+40,-50])underpeis();
 vinduer();
 translate([6740-100,-1000,0])doer(90,210);
 translate([6740-100,-1000-2150-100,0])doer(215,210);
@@ -22,10 +26,12 @@ taktro();
 membran();
 color("beige")difference(){
 reisverk();
-translate([0,0,overtak+15000])
+translate([0,0,overtak+15300])
 rotate([takvinkel,0,0])cube(30000,center=true);
 }
 translate([-300,0,3370])alsvaagplate();
+
+
 module alsvaagplate(){
 color("black")
 rotate([90+takvinkel,0,0])
@@ -35,10 +41,32 @@ for(i=[0:30:360*22.5])[i*0.9,50*sin(i)],
 for(j=[0:30:360*22.5])[j*0.9+3,50*-sin(-j)]
 ]);
 }
+
+module storbjelker(){
+for(i=[100:1900:4100])
+translate([0,-i,-400])cube([8000,100,200],center=false);
+}
+
+module golvbjelker(){
+for(i=[0:600:7100])
+translate([i,-4600,-200])cube([50,4600,150],center=false);
+
+translate([2650-1540-150,-4000,-200])cube([50,4000,150],center=false);
+translate([2650-50,-4000,-200])rotate([0,0,-0])cube([50,4000,150],center=false);
+//translate([2650,-4000,-200])rotate([0,0,-9])translate([1540+50,0,0])rotate([0,0,9])cube([50,4000,150],center=false);
+translate([2650,-4000,-200])rotate([0,0,-9])translate([1540+150+830,50,0])rotate([0,0,9])cube([50,4000,150],center=false);
+}
+module undergolv(){
+minkowski(){
+hull(){translate([6750-200,-4600+40,-100])underpeis();}
+cube(100,center=true);
+}
+}
+
 module takbjelker(){
 for (i =[0:600:7000]){
 rotate([0,0,180])
-translate([-50-i,-100,overtak-200])
+translate([-50-i,-100,overtak-100])
 rotate([-takvinkel,0,0])
 cube([50,5000,200],center=false);
 }
@@ -75,6 +103,9 @@ translate([6740-150,-100,0])cube([150,100,5000],center=false);
 translate([6740-150,-1000-100,0])cube([150,100,5000],center=false);
 translate([6740-150,-1000-2150-100-100,0])cube([150,100,5000],center=false);
 translate([6740-150,-4600+20,0])cube([150,100,5000],center=false);
+
+color("red")translate([-50,-4000,2230])cube([2700,50,150],center=false);
+color("red")translate([2650-50,-4000,2230])rotate([0,1.5,-9])cube([4200,50,150],center=false);
 }
 module vinduer(){
 //natre();
@@ -117,11 +148,21 @@ cube([100,990-100,1090-100],center=true);
 }
 
 module gulv(){
-color("chocolate")translate([0,0,-20])
-linear_extrude(20)
+color("chocolate")
+difference(){
+translate([0,0,-22-15])
+linear_extrude(22)
 polygon([[0,0],[6750,0],[6750,-4600],[2650,-4000],[0,-4000]]);
+hull(){translate([6750-200,-4600+40,-50])underpeis();}
+}
 }
 module peis(){rotate([0,0,-8])
 color("black")linear_extrude(1500)
 polygon([[0,0],[-1280,0],[-1280,150],[-150,150],[-150,1200],[0,1200]]);
+}
+module underpeis(){
+rotate([0,0,-8])
+for(i=[0:1:4])
+for(j=[0:1:3])
+translate([-i*285-200,j*285,0])color("grey")cube([280,280,50],center=false);
 }
