@@ -1,0 +1,47 @@
+hoyde=10;
+bredde=12;
+trinn=2;
+bukter=5;
+rund=2;
+kanter=7;
+knapp();
+
+
+
+
+module knapp(){
+intersection(){
+translate([0,0,-25])
+linear_extrude(50)
+minkowski(){
+square([bredde-2*rund,hoyde-2*rund],center=true);
+circle(rund,$fn=kanter);
+}
+union(){
+cylinder(8,(hoyde+bredde)/2,(hoyde+bredde)/5,center=false);
+translate([0,hoyde/2,-trinn*bukter-trinn])
+rotate([90,0,0])
+fjaer();
+}
+}
+}
+
+module fjaer(){
+linear_extrude(hoyde){
+siksak();
+translate([bredde/3,(trinn*bukter)/2+2*trinn])
+difference(){
+circle(1.4);
+circle(0.6);
+}
+}
+}
+
+module siksak(){
+for(i=[0:1:bukter]){
+translate([0,i*trinn])
+square([bredde,1],center=true);
+translate([(bredde/2-1/2)*cos(180*i),i*trinn+trinn/2])
+square([1,trinn],center=true);
+}
+}
