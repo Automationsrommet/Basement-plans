@@ -3,11 +3,92 @@ bredde=12;
 trinn=2;
 bukter=5;
 rund=2;
-kanter=7;
-knapp();
+kanter=9;
 
+hus();
+//kilen();
+//knapp();
+//innsats();
 
+module hus(){
+difference(){
+minkowski(){
+translate([0,0,-9.5])
+cube([27,24,14],center=true);
+cylinder(6,6,2,center=false,$fn=kanter);
+}
+knapper();
+translate([0,7,-13])
+cube([2,20,8],center=true);
+translate([0,0,-5])
+cube([30,1.5,16],center=true);
+translate([11,0,-3])
+cube([6,30,8],center=true);
+translate([-11,0,-3])
+cube([6,30,8],center=true);
+translate([0,18,-14])
+rotate([90,0,0])
+cylinder(8,3,3,center=true);
+translate([0,0,-16])
+rotate([0,0,65])
+cube([2,40,7],center=true);
+translate([0,0,-16])
+rotate([0,0,-65])
+cube([2,40,7],center=true);
+for(i=[-1:2:1])
+for(j=[-1:2:1]){
+translate([i*10,j*9,-19])
+cylinder(8,0,4,center=false);
+}
+}
+}
 
+module knapper(){
+for(i=[-1:2:1])
+for(j=[-1:2:1]){
+translate([i*8,j*7,0])
+rotate([0,0,90-i*90]){
+knappeplass();
+translate([0,2*i,0])kile();
+
+}
+}
+}
+module kile(){
+translate([0,0,-11])
+cube([6,25,1],center=true);
+}
+module kilen(){
+translate([0,0,-11])
+cube([5,34,0.6],center=true);
+}
+module knappeplass(){
+translate([0,0,-12.5])
+linear_extrude(17.5)
+minkowski(){
+square([bredde-2*rund,hoyde-2*rund],center=true);
+circle(rund+1 ,$fn=kanter);
+}
+translate([6.5,0,-(bukter*trinn)-trinn-1/2])
+cylinder(8+1,3+1,3+1,center=false,$fn=4);
+}
+module innsats(){
+difference(){
+translate([6.5,0,-(bukter*trinn)-trinn-1/2])
+cylinder(8,3,3,center=false,$fn=4);
+translate([6.5,0,-(bukter*trinn)-trinn-1/2+8])
+cube([20,1,1],center=true);
+translate([6.5+2,0,-(bukter*trinn)-trinn-1/2+8])
+rotate([0,70,0])
+cube([20,1,1],center=true);
+translate([6.5-3,0,-(bukter*trinn)-trinn-1/2+8])
+rotate([0,70,0])
+cube([20,1,1],center=true);
+translate([6.5+2.5,0,-(bukter*trinn)-trinn-1/2+8])
+rotate([0,90,0])
+cube([20,1,1],center=true);
+}
+}
 
 module knapp(){
 intersection(){
@@ -17,13 +98,18 @@ minkowski(){
 square([bredde-2*rund,hoyde-2*rund],center=true);
 circle(rund,$fn=kanter);
 }
+difference(){
 union(){
 cylinder(8,(hoyde+bredde)/2,(hoyde+bredde)/5,center=false);
 translate([0,hoyde/2,-trinn*bukter-trinn])
 rotate([90,0,0])
 fjaer();
 }
+translate([6.5,0,-(bukter*trinn)-trinn-1/2])
+cylinder(10,3.5,3.5,center=false,$fn=4);
 }
+}
+kile();
 }
 
 module fjaer(){
