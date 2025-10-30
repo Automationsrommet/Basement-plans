@@ -19,9 +19,9 @@ cylinder(6,7.5,3.5,center=false,$fn=kanter*2);
 }
 knapper();
 translate([0,7*2,-13])
-cube([2,20,8],center=true);
+cube([2,25,8],center=true);
 translate([0,0,-5])
-cube([30,1.5,16],center=true);
+cube([45,1.5,16],center=true);
 translate([11*2,0,-3])
 cube([6,45,8],center=true);
 translate([-11*2,0,-3])
